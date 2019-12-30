@@ -29,14 +29,25 @@ class omsa::repo() inherits omsa::params {
 
       require ::apt
 
+			$repo_url = $facts['os']['osreleasemaj'] ? {
+        '18'    => "http://linux.dell.com/repo/community/openmanage/${::omsa_version}/${::lsbdistcodename}",
+				default => 'http://linux.dell.com/repo/community/ubuntu',
+			}
+
+			$repos = $facts['os']['osreleasemaj'] ? {
+        '18'    => 'main',
+				default => 'openmanage',
+			}
+
       apt::source { 'dell-system-update':
-        location => 'http://linux.dell.com/repo/community/ubuntu',
-        release  => $::lsbdistcodename,
-        repos    => 'openmanage',
-        key      => $::omsa::apt_key,
-        include  => {
+        location       => $repo_url,
+        release        => $::lsbdistcodename,
+        repos          => $repos,
+        key            => $::omsa::apt_key,
+        include        => {
           src => false,
         },
+        allow_unsigned => true,
       }
     }
     'RedHat': {
