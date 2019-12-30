@@ -29,12 +29,12 @@ class omsa::repo() inherits omsa::params {
 
       require ::apt
 
-			$repo_url = $facts['os']['osreleasemaj'] ? {
+			$repo_url = $facts['osreleasemaj'] ? {
         '18'    => "http://linux.dell.com/repo/community/openmanage/${::omsa_version}/${::lsbdistcodename}",
 				default => 'http://linux.dell.com/repo/community/ubuntu',
 			}
 
-			$repos = $facts['os']['osreleasemaj'] ? {
+			$repos = $facts['osreleasemaj'] ? {
         '18'    => 'main',
 				default => 'openmanage',
 			}
