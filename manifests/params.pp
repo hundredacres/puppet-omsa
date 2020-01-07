@@ -42,6 +42,11 @@ class omsa::params {
       $idrac6_package     = undef
       $idrac7_package     = 'srvadmin-idracadm7'
       $idrac8_package     = 'srvadmin-idracadm8'
+
+      $omsa_version = $facts['osreleasemaj'] ? {
+        '18' => '930',
+        '16' => '910',
+      }
     }
     'RedHat': {
       if versioncmp($::operatingsystemmajrelease, '7') >= 0 {
